@@ -6,17 +6,17 @@ public class SecondLabApplication {
 
         FileContentProcessor fileContentProcessor1 = new ApplicationOne();
         fileContentProcessor1.processFileContent(
-                "file1.txt",
-                "file2.txt",
-                "file3.txt",
-                "ApplicationOneOutput.txt"
+                "source/file1.txt",
+                "source/file2.txt",
+                "source/file3.txt",
+                "output/ApplicationOneOutput.txt"
         );
 
         FileContentProcessor fileContentProcessor2 = new ApplicationTwo();
         fileContentProcessor2.processFileContent(
-                "file1.txt",
-                "file2.txt",
-                "file3.txt",
-                "ApplicationTwoOutput.txt");
+                "source/file1.txt",
+                "source/file2.txt",
+                "source/file3.txt",
+                "output/ApplicationTwoOutput.txt");
     }
 }
