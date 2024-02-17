@@ -1,0 +1,6 @@
+source/file1.txt:
+HELLO WORLD
+source/file2.txt:
+HELLO OTHER WORLD
+source/file3.txt:
+HELLO FROM FILE3
