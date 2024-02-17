@@ -26,31 +26,44 @@ public class ApplicationTwo extends FileContentProcessor {
             while ((line = bufferedReader.readLine()) != null) {
                 file1Content.append(line).append("\n");
             }
+
             String regex = "\\s|\\n";
             List<String> words = Arrays.asList(file1Content.toString().split(regex));
 
-            bufferedReader = new BufferedReader(file2);
-            StringBuilder file2Content = new StringBuilder();
-            while ((line = bufferedReader.readLine()) != null) {
-                file2Content.append(line).append("\n");
-            }
-            if (checkAllWordsInArray(words, Arrays.asList(file2Content.toString().split(regex)))) {
-                result.append(fileName2).append("\n");
-            }
-            bufferedReader = new BufferedReader(file3);
-            StringBuilder file3Content = new StringBuilder();
-            while ((line = bufferedReader.readLine()) != null) {
-                file3Content.append(line).append("\n");
-            }
-            if (checkAllWordsInArray(words, Arrays.asList(file3Content.toString().split(regex)))) {
-                result.append(fileName3).append("\n");
-            }
+            processFile(file2, fileName2, result, regex, words);
+            processFile(file3, fileName3, result, regex, words);
+
             return result.toString();
+
         } catch (IOException ex) {
             System.out.println("Ошибка ввода/вывода");
         }
         return null;
     }
+
+    private void processFile(
+            FileReader file,
+            String filename,
+            StringBuilder result,
+            String regex,
+            List<String> words
+    ) {
+        try {
+            BufferedReader bufferedReader;
+            String line;
+            bufferedReader = new BufferedReader(file);
+            StringBuilder fileContent = new StringBuilder();
+            while ((line = bufferedReader.readLine()) != null) {
+                fileContent.append(line).append("\n");
+            }
+            if (checkAllWordsInArray(words, Arrays.asList(fileContent.toString().split(regex)))) {
+                result.append(filename).append("\n");
+            }
+        } catch (IOException ex) {
+            System.out.println("Ошибка ввода/вывода");
+        }
+    }
+
     private boolean checkAllWordsInArray(List<String> wordsToCheck, List<String> wordsArray) {
         for (String word : wordsToCheck) {
             if (!wordsArray.contains(word)) {
