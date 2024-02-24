@@ -1,14 +1,17 @@
 package lab.chernyshev;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Game {
     private final List<List<Character>> board;
-    private boolean playerSymbol;//true->x, false->o
+    private PlayerSymbol playerSymbol;
     private int counter;
     private final int size;
+
+    private static final CommandInvoker commandInvoker = new CommandInvoker();
 
     public Game(int size) {
         this.size = size;
@@ -17,7 +20,7 @@ public class Game {
             List<Character> row = new ArrayList<>(Collections.nCopies(size, '-'));
             board.add(row);
         }
-        playerSymbol = true;
+        playerSymbol = PlayerSymbol.CROSS;
         counter = 0;
     }
 
@@ -35,19 +38,19 @@ public class Game {
 
     public void makeMove(int row, int column) {
         if (row > size - 1 || column > size - 1 || row < 0 || column < 0) {
-            throw new RuntimeException("Row or Column is outrange");
+            throw new RuntimeException(LocalDateTime.now() + " | Row or column is out of range");
         }
         if (gameIsOver()) {
-            throw new RuntimeException("GameOver");
+            throw new RuntimeException(LocalDateTime.now() + " | Game over\n" + "-----\n" + this + "-----");
         }
 
         List<Character> currentRow = board.get(row);
         if (currentRow.get(column) != '-') {
-            throw new RuntimeException("This is already taken");
+            throw new RuntimeException(LocalDateTime.now() + " | This field is already filled. Move was not applied");
         }
-        currentRow.set(column, playerSymbol ? 'X' : 'O');
+        currentRow.set(column, playerSymbol.equals(PlayerSymbol.CROSS) ? 'X' : 'O');
         counter++;
-        playerSymbol = !playerSymbol;
+        playerSymbol = playerSymbol.equals(PlayerSymbol.CROSS) ? PlayerSymbol.ZERO : PlayerSymbol.CROSS;
     }
 
 
@@ -55,12 +58,15 @@ public class Game {
         List<Character> boardRow = board.get(row);
         boardRow.set(column, '-');
         board.set(row, boardRow);
-        playerSymbol = !playerSymbol;
+        playerSymbol = playerSymbol.equals(PlayerSymbol.CROSS) ? PlayerSymbol.ZERO : PlayerSymbol.CROSS;
         counter--;
     }
 
     public boolean gameIsOver() {
-        if (counter < size * 2 - 1) return false;
+
+        if (counter < size * 2 - 1) {
+            return false;
+        }
 
         for (int i = 0; i < size; i++) {
             if (checkLine(board.get(i), size) || checkLine(getColumn(i), size)) {
@@ -97,11 +103,31 @@ public class Game {
         for (int i = 0; i < size; i++) {
             if (line.get(i) != 'X' && line.get(i) != 'O') {
                 return false;
-            } else if (line.get(i) == 'X') oWins = false;
-            else if (line.get(i) == 'O') xWins = false;
+            } else if (line.get(i) == 'X') {
+                oWins = false;
+            }
+            else if (line.get(i) == 'O') {
+                xWins = false;
+            }
         }
         return xWins || oWins;
     }
 
-}
+    public enum PlayerSymbol {
+        CROSS, ZERO;
+    }
 
+    public void inputMove(int row, int column) {
+        commandInvoker.executeCommand(
+                MakeMoveCommand.builder()
+                        .game(this)
+                        .row(row)
+                        .column(column)
+                        .build()
+        );
+    }
+
+    public void undoMove() {
+        commandInvoker.undoCommand();
+    }
+}
