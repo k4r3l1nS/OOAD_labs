@@ -1,9 +1,9 @@
-package com.k4r3l1ns;
+package main.java.com.k4r3l1ns;
 
-import com.k4r3l1ns.model.Text;
-import com.k4r3l1ns.strategy.impl.ShiftByFive;
-import com.k4r3l1ns.strategy.impl.ShiftByOne;
-import com.k4r3l1ns.strategy.impl.ShiftByTwo;
+import main.java.com.k4r3l1ns.model.Text;
+import main.java.com.k4r3l1ns.strategy.impl.ShiftByFive;
+import main.java.com.k4r3l1ns.strategy.impl.ShiftByOne;
+import main.java.com.k4r3l1ns.strategy.impl.ShiftByTwo;
 
 import java.io.File;
 

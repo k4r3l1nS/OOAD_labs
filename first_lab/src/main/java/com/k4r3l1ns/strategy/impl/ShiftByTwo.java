@@ -1,8 +1,8 @@
-package com.k4r3l1ns.strategy.impl;
+package main.java.com.k4r3l1ns.strategy.impl;
 
-import com.k4r3l1ns.strategy.Encodeable;
+import main.java.com.k4r3l1ns.strategy.Encodeable;
 
-public class ShiftByTwo implements Encodeable {
+public class ShiftByTwo implements Encodeable{
     @Override
     public String encode(String source) {
 

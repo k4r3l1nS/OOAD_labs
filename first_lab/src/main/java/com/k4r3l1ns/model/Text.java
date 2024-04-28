@@ -1,20 +1,41 @@
-package com.k4r3l1ns.model;
+package main.java.com.k4r3l1ns.model;
 
-import com.k4r3l1ns.strategy.Encodeable;
-import lombok.Getter;
-import lombok.Setter;
+import main.java.com.k4r3l1ns.strategy.Encodeable;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-@Getter
 public class Text {
 
     private String text;
     private String encodedText;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getEncodedText() {
+        return encodedText;
+    }
+
+    public void setEncodedText(String encodedText) {
+        this.encodedText = encodedText;
+    }
+
+    public Encodeable getEncodingStrategy() {
+        return encodingStrategy;
+    }
+
+    public void setEncodingStrategy(Encodeable encodingStrategy) {
+        this.encodingStrategy = encodingStrategy;
+    }
+
     Encodeable encodingStrategy;
 
     public Text(File sourceFile, Encodeable encodingStrategy) {

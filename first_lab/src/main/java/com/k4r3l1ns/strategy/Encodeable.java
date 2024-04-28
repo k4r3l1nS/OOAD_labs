@@ -1,4 +1,4 @@
-package com.k4r3l1ns.strategy;
+package main.java.com.k4r3l1ns.strategy;
 
 public interface Encodeable {
 

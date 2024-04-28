@@ -1,6 +1,6 @@
-package com.k4r3l1ns.strategy.impl;
+package main.java.com.k4r3l1ns.strategy.impl;
 
-import com.k4r3l1ns.strategy.Encodeable;
+import main.java.com.k4r3l1ns.strategy.Encodeable;
 
 public class ShiftByFive implements Encodeable {
     @Override
